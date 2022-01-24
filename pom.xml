@@ -5,6 +5,7 @@
     <modules>
         <module>common</module>
         <module>myService</module>
+        <module>myDialect-getway</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
