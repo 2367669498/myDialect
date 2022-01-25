@@ -24,9 +24,5 @@
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
-        <dependency>
-            <groupId>com.zheng</groupId>
-            <artifactId>myDialect-getway</artifactId>
-        </dependency>
     </dependencies>
 </project>
