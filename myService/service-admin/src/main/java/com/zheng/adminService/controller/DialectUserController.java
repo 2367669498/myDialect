@@ -4,6 +4,7 @@ package com.zheng.adminService.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zheng.Utils.MD5;
 import com.zheng.Utils.ResponseUtils;
 import com.zheng.adminService.entity.DialectUser;
 import com.zheng.adminService.entity.vo.UserVo;
@@ -77,16 +78,20 @@ public class DialectUserController {
     @PostMapping("insertUser")
     public ResponseUtils insertUser(DialectUser user){
         if(user!=null){
-                dialectUserService.save(user);
+            String encrypt = MD5.encrypt(user.getPwd());
+            user.setPwd(encrypt);
+            dialectUserService.save(user);
         }
         return ResponseUtils.ok();
     }
     @ApiOperation(value = "更新")
     @PostMapping("updateById")
     public ResponseUtils updateById(UserVo user){
-        System.out.println("asdfghj");
         DialectUser dialectUser = new DialectUser();
         BeanUtils.copyProperties(user,dialectUser);
+        //MD5加密
+        String encrypt = MD5.encrypt(dialectUser.getPwd());
+        dialectUser.setPwd(encrypt);
         dialectUserService.updateById(dialectUser);
         return ResponseUtils.ok();
     }

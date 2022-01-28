@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @MapperScan("com.zheng.adminService.mapper")
 public class MyBatisPlusConfig {
     /**
-     * ·ÖÒ³²å¼ş
+     * åˆ†é¡µæ’ä»¶
      * */
     @Bean
     public PaginationInterceptor paginationInterceptor() {
