@@ -27,17 +27,20 @@ public class DialectRegional implements Serializable {
     @ApiModelProperty(value = "乡音的名称")
     private String regionalName;
 
-    @ApiModelProperty(value = "乡音的类型  0：未知 1：音频 2：视频")
-    private Integer type;
-
     @ApiModelProperty(value = "乡音采集样式 1：单字  2：词汇  3：例句  4：民谣")
     private Integer regionalType;
 
-    @ApiModelProperty(value = "乡音文件保存的地址")
-    private String videoUrl;
+    @ApiModelProperty(value = "是否存在视频 0：不存在 1：存在")
+    private Integer isVideo;
 
-    @ApiModelProperty(value = "文件id")
-    private String fileId;
+    @ApiModelProperty(value = "乡音视频保存文件id")
+    private String videoId;
+
+    @ApiModelProperty(value = "是否存在音频 0：不存在 1：存在")
+    private Integer isMusic;
+
+    @ApiModelProperty(value = "乡音音频保存文件id")
+    private String musicId;
 
     @ApiModelProperty(value = "归属地id")
     private String addressId;

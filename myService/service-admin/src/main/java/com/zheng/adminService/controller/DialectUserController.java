@@ -55,6 +55,7 @@ public class DialectUserController {
     @ApiOperation(value = "批量删除")
     @DeleteMapping("/deleteUser")
     public ResponseUtils deleteUser(@RequestBody List<String> idList){
+//        return ResponseUtils.error().message("yichang=============");
         return dialectUserService.deleteById(idList);
     }
 
