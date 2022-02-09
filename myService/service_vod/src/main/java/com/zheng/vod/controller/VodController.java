@@ -1,5 +1,10 @@
 package com.zheng.vod.controller;
 
+import com.aliyun.vod.upload.impl.UploadVideoImpl;
+import com.aliyun.vod.upload.req.UploadStreamRequest;
+import com.aliyun.vod.upload.req.UploadURLStreamRequest;
+import com.aliyun.vod.upload.resp.UploadStreamResponse;
+import com.aliyun.vod.upload.resp.UploadURLStreamResponse;
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.vod.model.v20170321.*;
 import com.baomidou.mybatisplus.extension.api.R;
@@ -8,10 +13,16 @@ import com.zheng.servicebase.ExceptionHandler.BaseException;
 import com.zheng.vod.Utils.ConstantVodUtils;
 import com.zheng.vod.Utils.InitVodCilent;
 import com.zheng.vod.service.VodService;
+import org.apache.http.entity.ContentType;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.*;
 import java.util.List;
 
 @RestController
@@ -22,6 +33,28 @@ public class VodController {
     @Autowired
     private VodService vodService;
 
+    private MultipartFile getMultipartFile(byte[] bytes) {
+        System.out.println("二进制转换MultipartFile开始");
+        MockMultipartFile mockMultipartFile = null;
+        //java7新特性  不用手动关闭流
+        try (InputStream inputStream = new ByteArrayInputStream(bytes)) {
+            mockMultipartFile =new MockMultipartFile("copy.wav" , "copy5gd.wav",
+                    ContentType.APPLICATION_OCTET_STREAM.toString(), inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("二进制文件转换图片异常");
+        }
+        return mockMultipartFile;
+    }
+
+
+    @PostMapping("/uploadAlyiVideoJS")
+    public ResponseUtils uploadAlyiVideoJS(HttpServletRequest request){
+        MultipartHttpServletRequest multipartHttpServletRequest=(MultipartHttpServletRequest) request;
+        MultipartFile file = multipartHttpServletRequest.getFile("file");
+        String videoId = vodService.uploadVideoAly(file);
+        return ResponseUtils.ok().data("videoId",videoId);
+    }
     //上传视频到阿里云
     @PostMapping("uploadAlyiVideo")
     public ResponseUtils uploadAlyiVideo(MultipartFile file) {
