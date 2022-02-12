@@ -12,6 +12,7 @@ import com.zheng.adminService.entity.vo.AddressVo;
 import com.zheng.adminService.service.DialectAddressService;
 import io.swagger.annotations.ApiParam;
 import jdk.internal.util.xml.impl.ReaderUTF8;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +42,10 @@ public class DialectAddressController {
         QueryWrapper<DialectAddress> wrapper = new QueryWrapper<>();
         wrapper.eq("is_delete",0);
         //TODO
+        String addressName = address.getAddressName();
+        if(StringUtils.isNotEmpty(addressName)){
+            wrapper.like("address_name",addressName);
+        }
         Page<DialectAddress> Page = new Page<>(page,limit);
         IPage<DialectAddress> addressIPage = addressService.page(Page, wrapper);
         return ResponseUtils.ok().data("items",addressIPage.getRecords()).data("total",addressIPage.getTotal());
@@ -61,6 +66,13 @@ public class DialectAddressController {
         String city = address.getCity();
         String county = address.getCounty();
         //拼接名字
+        String addressName=province+"-"+city+"-"+county;
+        QueryWrapper<DialectAddress> wrapper = new QueryWrapper<>();
+        wrapper.eq("address_name",addressName).eq("is_delete",0);
+        DialectAddress one = addressService.getOne(wrapper);
+        if(one!=null){
+            return ResponseUtils.error().message("添加失败！！已经存在相同的地名！！");
+        }
         address.setAddressName(province+"-"+city+"-"+county);
         addressService.save(address);
         return ResponseUtils.ok();

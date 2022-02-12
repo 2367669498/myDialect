@@ -28,6 +28,9 @@ public class AddressVo {
     @ApiModelProperty(value = "经度")
     private String lat;
 
+    @ApiModelProperty(value = "介绍")
+    private String detailed;
+
     @ApiModelProperty(value = "是否删除 0：未删除 1：已删除")
     private Integer isDelete;
 }
