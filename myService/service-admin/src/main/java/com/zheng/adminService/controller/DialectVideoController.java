@@ -20,6 +20,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * <p>
  * 趣味视频表 前端控制器
@@ -87,6 +89,15 @@ public class DialectVideoController {
         BeanUtils.copyProperties(dialectVideoVo,dialectVideo);
         dialectVideoService.updateById(dialectVideo);
         return ResponseUtils.ok();
+    }
+
+    @ApiOperation(value = "根据地址查看趣味视频")
+    @GetMapping("getListByAddressId/{id}")
+    public ResponseUtils getListByAddressId(@PathVariable("id") String id){
+        QueryWrapper<DialectVideo> wrapper = new QueryWrapper<>();
+        wrapper.eq("is_delete",0).eq("address_id",id);
+        List<DialectVideo> list = dialectVideoService.list(wrapper);
+        return ResponseUtils.ok().data("list",list);
     }
 }
 

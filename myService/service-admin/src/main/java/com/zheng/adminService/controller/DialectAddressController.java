@@ -102,6 +102,7 @@ public class DialectAddressController {
         return ResponseUtils.ok().data("item",dialectAddress);
     }
 
+
     @DeleteMapping("deleteByIds")
     public ResponseUtils deleteByIds(@RequestBody List<String> idList){
        return addressService.deleteByIds(idList);
