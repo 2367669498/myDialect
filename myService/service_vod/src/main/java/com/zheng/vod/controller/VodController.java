@@ -1,20 +1,14 @@
 package com.zheng.vod.controller;
 
-import com.aliyun.vod.upload.impl.UploadVideoImpl;
-import com.aliyun.vod.upload.req.UploadStreamRequest;
-import com.aliyun.vod.upload.req.UploadURLStreamRequest;
-import com.aliyun.vod.upload.resp.UploadStreamResponse;
-import com.aliyun.vod.upload.resp.UploadURLStreamResponse;
+
 import com.aliyuncs.DefaultAcsClient;
 import com.aliyuncs.vod.model.v20170321.*;
-import com.baomidou.mybatisplus.extension.api.R;
 import com.zheng.Utils.ResponseUtils;
 import com.zheng.servicebase.ExceptionHandler.BaseException;
 import com.zheng.vod.Utils.ConstantVodUtils;
 import com.zheng.vod.Utils.InitVodCilent;
 import com.zheng.vod.service.VodService;
 import org.apache.http.entity.ContentType;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.bind.annotation.*;

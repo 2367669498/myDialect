@@ -8,15 +8,15 @@ import lombok.Data;
 public class UserVo {
     private String id;
 
-    @ApiModelProperty(value = "ç”¨æˆ·å§“å")
+    @ApiModelProperty(value = "ÓÃ»§ĞÕÃû")
     private String name;
 
-    @ApiModelProperty(value = "ç”¨æˆ·å¯†ç ")
+    @ApiModelProperty(value = "ÓÃ»§ÃÜÂë")
     private String pwd;
 
-    @ApiModelProperty(value = "ç”¨æˆ·è½¬æ€  1ï¼šå¯ç”¨ 2ï¼šç¦ç”¨")
+    @ApiModelProperty(value = "ÓÃ»§×ªÌ¬  1£ºÆôÓÃ 2£º½ûÓÃ")
     private Integer status;
 
-    @ApiModelProperty(value = "æ˜¯å¦åˆ é™¤  1ï¼šåˆ é™¤ 0ï¼šæœªåˆ é™¤")
+    @ApiModelProperty(value = "ÊÇ·ñÉ¾³ı  1£ºÉ¾³ı 0£ºÎ´É¾³ı")
     private Integer isDelete;
 }
