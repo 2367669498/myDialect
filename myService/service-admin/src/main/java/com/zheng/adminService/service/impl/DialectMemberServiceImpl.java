@@ -5,6 +5,7 @@ import com.zheng.Utils.JwtUtils;
 import com.zheng.Utils.MD5;
 import com.zheng.Utils.ResponseUtils;
 import com.zheng.adminService.entity.DialectMember;
+import com.zheng.adminService.entity.DialectUser;
 import com.zheng.adminService.entity.vo.MemberVo;
 import com.zheng.adminService.mapper.DialectMemberMapper;
 import com.zheng.adminService.service.DialectMemberService;
@@ -12,6 +13,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zheng.servicebase.ExceptionHandler.BaseException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+
+import java.util.List;
 
 /**
  * <p>
@@ -52,7 +55,9 @@ public class DialectMemberServiceImpl extends ServiceImpl<DialectMemberMapper, D
         if (!MD5.encrypt(password).equals(phoneMember.getPassword())) {
             throw new BaseException(20001, "密码错误");
         }
-
+        if (phoneMember.getStatus() == 0) {
+            throw new BaseException(20001, "用户被禁用");
+        }
         //登录成功
         //生成token字符串，使用jwt工具类
         String jwtToken = JwtUtils.getJwtToken(phoneMember.getId(), phoneMember.getUsername());
@@ -96,8 +101,21 @@ public class DialectMemberServiceImpl extends ServiceImpl<DialectMemberMapper, D
     @Override
     public DialectMember getOpenIdMember(String openid) {
         QueryWrapper<DialectMember> wrapper = new QueryWrapper<>();
-        wrapper.eq("openid",openid);
+        wrapper.eq("openid", openid);
         DialectMember member = baseMapper.selectOne(wrapper);
         return member;
+    }
+
+    @Override
+    public ResponseUtils deleteById(List<String> idList) {
+        List<DialectMember> list = this.baseMapper.selectBatchIds(idList);
+        if (list != null) {
+            for (DialectMember member : list) {
+                member.setIsDelete(1);
+                this.baseMapper.updateById(member);
+            }
+            return ResponseUtils.ok();
+        }
+        return ResponseUtils.error().message("不存在该数据！！");
     }
 }

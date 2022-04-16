@@ -23,58 +23,58 @@ public class DialectWxApiController {
     @Autowired
     private DialectMemberService dialectMemberService;
 
-    //2 »ñÈ¡É¨ÃèÈËĞÅÏ¢£¬Ìí¼ÓÊı¾İ
+    //2 è·å–æ‰«æäººä¿¡æ¯ï¼Œæ·»åŠ æ•°æ®
     @GetMapping("callback")
     public String callback(String code, String state) {
         try {
-            //1 »ñÈ¡codeÖµ£¬ÁÙÊ±Æ±¾İ£¬ÀàËÆÓÚÑéÖ¤Âë
-            //2 ÄÃ×ÅcodeÇëÇó Î¢ĞÅ¹Ì¶¨µÄµØÖ·£¬µÃµ½Á½¸öÖµ accsess_token ºÍ openid
+            //1 è·å–codeå€¼ï¼Œä¸´æ—¶ç¥¨æ®ï¼Œç±»ä¼¼äºéªŒè¯ç 
+            //2 æ‹¿ç€codeè¯·æ±‚ å¾®ä¿¡å›ºå®šçš„åœ°å€ï¼Œå¾—åˆ°ä¸¤ä¸ªå€¼ accsess_token å’Œ openid
             String baseAccessTokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token" +
                     "?appid=%s" +
                     "&secret=%s" +
                     "&code=%s" +
                     "&grant_type=authorization_code";
-            //Æ´½ÓÈı¸ö²ÎÊı £ºid  ÃØÔ¿ ºÍ codeÖµ
+            //æ‹¼æ¥ä¸‰ä¸ªå‚æ•° ï¼šid  ç§˜é’¥ å’Œ codeå€¼
             String accessTokenUrl = String.format(
                     baseAccessTokenUrl,
                     ConstantWxUtils.WX_OPEN_APP_ID,
                     ConstantWxUtils.WX_OPEN_APP_SECRET,
                     code
             );
-            //ÇëÇóÕâ¸öÆ´½ÓºÃµÄµØÖ·£¬µÃµ½·µ»ØÁ½¸öÖµ accsess_token ºÍ openid
-            //Ê¹ÓÃhttpclient·¢ËÍÇëÇó£¬µÃµ½·µ»Ø½á¹û
+            //è¯·æ±‚è¿™ä¸ªæ‹¼æ¥å¥½çš„åœ°å€ï¼Œå¾—åˆ°è¿”å›ä¸¤ä¸ªå€¼ accsess_token å’Œ openid
+            //ä½¿ç”¨httpclientå‘é€è¯·æ±‚ï¼Œå¾—åˆ°è¿”å›ç»“æœ
             String accessTokenInfo = HttpClientUtils.get(accessTokenUrl);
 
-            //´ÓaccessTokenInfo×Ö·û´®»ñÈ¡³öÀ´Á½¸öÖµ accsess_token ºÍ openid
-            //°ÑaccessTokenInfo×Ö·û´®×ª»»map¼¯ºÏ£¬¸ù¾İmapÀïÃækey»ñÈ¡¶ÔÓ¦Öµ
-            //Ê¹ÓÃjson×ª»»¹¤¾ß Gson
+            //ä»accessTokenInfoå­—ç¬¦ä¸²è·å–å‡ºæ¥ä¸¤ä¸ªå€¼ accsess_token å’Œ openid
+            //æŠŠaccessTokenInfoå­—ç¬¦ä¸²è½¬æ¢mapé›†åˆï¼Œæ ¹æ®mapé‡Œé¢keyè·å–å¯¹åº”å€¼
+            //ä½¿ç”¨jsonè½¬æ¢å·¥å…· Gson
             Gson gson = new Gson();
             HashMap mapAccessToken = gson.fromJson(accessTokenInfo, HashMap.class);
             String access_token = (String)mapAccessToken.get("access_token");
             String openid = (String)mapAccessToken.get("openid");
 
-            //°ÑÉ¨ÃèÈËĞÅÏ¢Ìí¼ÓÊı¾İ¿âÀïÃæ
-            //ÅĞ¶ÏÊı¾İ±íÀïÃæÊÇ·ñ´æÔÚÏàÍ¬Î¢ĞÅĞÅÏ¢£¬¸ù¾İopenidÅĞ¶Ï
+            //æŠŠæ‰«æäººä¿¡æ¯æ·»åŠ æ•°æ®åº“é‡Œé¢
+            //åˆ¤æ–­æ•°æ®è¡¨é‡Œé¢æ˜¯å¦å­˜åœ¨ç›¸åŒå¾®ä¿¡ä¿¡æ¯ï¼Œæ ¹æ®openidåˆ¤æ–­
             DialectMember member = dialectMemberService.getOpenIdMember(openid);
-            if(member == null) {//memeberÊÇ¿Õ£¬±íÃ»ÓĞÏàÍ¬Î¢ĞÅÊı¾İ£¬½øĞĞÌí¼Ó
+            if(member == null) {//memeberæ˜¯ç©ºï¼Œè¡¨æ²¡æœ‰ç›¸åŒå¾®ä¿¡æ•°æ®ï¼Œè¿›è¡Œæ·»åŠ 
 
-                //3 ÄÃ×ÅµÃµ½accsess_token ºÍ openid£¬ÔÙÈ¥ÇëÇóÎ¢ĞÅÌá¹©¹Ì¶¨µÄµØÖ·£¬»ñÈ¡µ½É¨ÃèÈËĞÅÏ¢
-                //·ÃÎÊÎ¢ĞÅµÄ×ÊÔ´·şÎñÆ÷£¬»ñÈ¡ÓÃ»§ĞÅÏ¢
+                //3 æ‹¿ç€å¾—åˆ°accsess_token å’Œ openidï¼Œå†å»è¯·æ±‚å¾®ä¿¡æä¾›å›ºå®šçš„åœ°å€ï¼Œè·å–åˆ°æ‰«æäººä¿¡æ¯
+                //è®¿é—®å¾®ä¿¡çš„èµ„æºæœåŠ¡å™¨ï¼Œè·å–ç”¨æˆ·ä¿¡æ¯
                 String baseUserInfoUrl = "https://api.weixin.qq.com/sns/userinfo" +
                         "?access_token=%s" +
                         "&openid=%s";
-                //Æ´½ÓÁ½¸ö²ÎÊı
+                //æ‹¼æ¥ä¸¤ä¸ªå‚æ•°
                 String userInfoUrl = String.format(
                         baseUserInfoUrl,
                         access_token,
                         openid
                 );
-                //·¢ËÍÇëÇó
+                //å‘é€è¯·æ±‚
                 String userInfo = HttpClientUtils.get(userInfoUrl);
-                //»ñÈ¡·µ»Øuserinfo×Ö·û´®É¨ÃèÈËĞÅÏ¢
+                //è·å–è¿”å›userinfoå­—ç¬¦ä¸²æ‰«æäººä¿¡æ¯
                 HashMap userInfoMap = gson.fromJson(userInfo, HashMap.class);
-                String nickname = (String)userInfoMap.get("nickname");//êÇ³Æ
-                String headimgurl = (String)userInfoMap.get("headimgurl");//Í·Ïñ
+                String nickname = (String)userInfoMap.get("nickname");//æ˜µç§°
+                String headimgurl = (String)userInfoMap.get("headimgurl");//å¤´åƒ
 
                 member = new DialectMember();
                 member.setOpenid(openid);
@@ -83,23 +83,23 @@ public class DialectWxApiController {
                 dialectMemberService.save(member);
             }
 
-            //Ê¹ÓÃjwt¸ù¾İmember¶ÔÏóÉú³Étoken×Ö·û´®
+            //ä½¿ç”¨jwtæ ¹æ®memberå¯¹è±¡ç”Ÿæˆtokenå­—ç¬¦ä¸²
             String jwtToken = JwtUtils.getJwtToken(member.getId(), member.getUsername());
-            //×îºó£º·µ»ØÊ×Ò³Ãæ£¬Í¨¹ıÂ·¾¶´«µİtoken×Ö·û´®
+            //æœ€åï¼šè¿”å›é¦–é¡µé¢ï¼Œé€šè¿‡è·¯å¾„ä¼ é€’tokenå­—ç¬¦ä¸²
             return "redirect:http://localhost:3000?token="+jwtToken;
         }catch(Exception e) {
-            throw new BaseException(20001,"µÇÂ¼Ê§°Ü");
+            throw new BaseException(20001,"ç™»å½•å¤±è´¥");
         }
     }
 
-    //1 Éú³ÉÎ¢ĞÅÉ¨Ãè¶şÎ¬Âë
+    //1 ç”Ÿæˆå¾®ä¿¡æ‰«æäºŒç»´ç 
     @GetMapping("login")
     public String getWxCode() {
-        //¹Ì¶¨µØÖ·£¬ºóÃæÆ´½Ó²ÎÊı
+        //å›ºå®šåœ°å€ï¼Œåé¢æ‹¼æ¥å‚æ•°
 //        String url = "https://open.weixin.qq.com/" +
 //                "connect/qrconnect?appid="+ ConstantWxUtils.WX_OPEN_APP_ID+"&response_type=code";
 
-        // Î¢ĞÅ¿ª·ÅÆ½Ì¨ÊÚÈ¨baseUrl  %sÏàµ±ÓÚ?´ú±íÕ¼Î»·û
+        // å¾®ä¿¡å¼€æ”¾å¹³å°æˆæƒbaseUrl  %sç›¸å½“äº?ä»£è¡¨å ä½ç¬¦
         String baseUrl = "https://open.weixin.qq.com/connect/qrconnect" +
                 "?appid=%s" +
                 "&redirect_uri=%s" +
@@ -108,15 +108,15 @@ public class DialectWxApiController {
                 "&state=%s" +
                 "#wechat_redirect";
 
-        //¶Ôredirect_url½øĞĞURLEncoder±àÂë
+        //å¯¹redirect_urlè¿›è¡ŒURLEncoderç¼–ç 
         String redirectUrl = "http://localhost:8160/api/ucenter/wx/callback";
         try {
             redirectUrl = URLEncoder.encode(redirectUrl, "utf-8");
         }catch(Exception e) {
-            throw new BaseException(20001,"µÇÂ¼Ê§°Ü");
+            throw new BaseException(20001,"ç™»å½•å¤±è´¥");
         }
 
-        //ÉèÖÃ%sÀïÃæÖµ
+        //è®¾ç½®%sé‡Œé¢å€¼
         String url = String.format(
                 baseUrl,
                 ConstantWxUtils.WX_OPEN_APP_ID,
@@ -124,7 +124,7 @@ public class DialectWxApiController {
                 "zhengdi"
         );
 
-        //ÖØ¶¨Ïòµ½ÇëÇóÎ¢ĞÅµØÖ·ÀïÃæ
+        //é‡å®šå‘åˆ°è¯·æ±‚å¾®ä¿¡åœ°å€é‡Œé¢
         return "redirect:"+url;
     }
 }

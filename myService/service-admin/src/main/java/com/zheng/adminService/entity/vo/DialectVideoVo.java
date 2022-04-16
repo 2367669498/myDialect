@@ -8,16 +8,16 @@ public class DialectVideoVo {
     @ApiModelProperty(value = "id")
     private String id;
 
-    @ApiModelProperty(value = "¹éÊôµØid")
+    @ApiModelProperty(value = "å½’å±åœ°id")
     private String addressId;
 
-    @ApiModelProperty(value = "ÊÓÆµÃû³Æ")
+    @ApiModelProperty(value = "è§†é¢‘åç§°")
     private String name;
 
-    @ApiModelProperty(value = "È¤Î¶ÊÓÆµid")
+    @ApiModelProperty(value = "è¶£å‘³è§†é¢‘id")
     private String videoId;
 
-    @ApiModelProperty(value = "ÊÓÆµ½éÉÜ")
+    @ApiModelProperty(value = "è§†é¢‘ä»‹ç»")
     private String introduce;
 
 }

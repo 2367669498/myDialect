@@ -3,6 +3,7 @@ package com.zheng.adminService.service;
 import com.zheng.Utils.ResponseUtils;
 import com.zheng.adminService.entity.DialectUser;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zheng.adminService.entity.vo.LoginVo;
 
 import java.util.List;
 
@@ -18,4 +19,6 @@ public interface DialectUserService extends IService<DialectUser> {
 
 
     ResponseUtils deleteById(List<String> idList);
+
+    String login(LoginVo vo);
 }

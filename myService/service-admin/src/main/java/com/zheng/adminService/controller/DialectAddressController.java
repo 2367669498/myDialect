@@ -15,6 +15,8 @@ import jdk.internal.util.xml.impl.ReaderUTF8;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -51,15 +53,14 @@ public class DialectAddressController {
         return ResponseUtils.ok().data("items",addressIPage.getRecords()).data("total",addressIPage.getTotal());
     }
 
+    @Cacheable(value = "address",key = "'addressList'")
     @GetMapping("/getList")
     public ResponseUtils getList(){
-        //查询所有的地址,并返回地名
-        QueryWrapper<DialectAddress> wrapper = new QueryWrapper<>();
-        wrapper.eq("is_delete",0);
-        List<DialectAddress> list = addressService.list(wrapper);
+        List<DialectAddress> list = addressService.getAddressList();
         return ResponseUtils.ok().data("items",list);
     }
 
+    @CacheEvict(value = "address",allEntries = true)
     @PostMapping("/save")
     public ResponseUtils saveAddress(DialectAddress address){
         String province = address.getProvince();
@@ -78,6 +79,7 @@ public class DialectAddressController {
         return ResponseUtils.ok();
     }
 
+    @CacheEvict(value = "address",allEntries = true)
     @PostMapping("/updateAddress")
     public ResponseUtils updateAddress(AddressVo addressVo){
         String province = addressVo.getProvince();
@@ -95,14 +97,14 @@ public class DialectAddressController {
         }
 
     }
-
+    @Cacheable(value = "address",key = "'getOne'+#id")
     @GetMapping("/getOne/{id}")
     public ResponseUtils getOne(@PathVariable("id") String id){
         DialectAddress dialectAddress = addressService.getById(id);
         return ResponseUtils.ok().data("item",dialectAddress);
     }
 
-
+    @CacheEvict(value = "address",allEntries = true)
     @DeleteMapping("deleteByIds")
     public ResponseUtils deleteByIds(@RequestBody List<String> idList){
        return addressService.deleteByIds(idList);

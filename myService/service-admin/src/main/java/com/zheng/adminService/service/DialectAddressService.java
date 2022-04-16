@@ -17,4 +17,7 @@ import java.util.List;
 public interface DialectAddressService extends IService<DialectAddress> {
 
     ResponseUtils deleteByIds(List<String> idList);
+
+
+    List<DialectAddress> getAddressList();
 }

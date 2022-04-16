@@ -1,7 +1,10 @@
 package com.zheng.adminService.service;
 
+import com.zheng.Utils.ResponseUtils;
 import com.zheng.adminService.entity.DialectNew;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface DialectNewService extends IService<DialectNew> {
 
+    ResponseUtils deleteById(List<String> idList);
 }

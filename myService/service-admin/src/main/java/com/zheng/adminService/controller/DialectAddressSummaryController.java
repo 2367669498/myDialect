@@ -11,6 +11,8 @@ import com.zheng.adminService.entity.vo.AddressTwoVo;
 import com.zheng.adminService.service.DialectAddressSummaryService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -31,12 +33,14 @@ public class DialectAddressSummaryController {
     @Autowired
     private DialectAddressSummaryService addressSummaryService;
 
+    @CacheEvict(value = "addressSum",allEntries = true)
     @PostMapping("saveAddressSummary")
     public ResponseUtils save(DialectAddressSummary addressSummary){
         addressSummaryService.save(addressSummary);
         return ResponseUtils.ok();
     }
 
+    @Cacheable(value = "addressSum",key = "'getProvinceList'")
     @GetMapping("getProvinceList")
     public ResponseUtils getProvinceList(){
         QueryWrapper<DialectAddressSummary> wrapper = new QueryWrapper<>();

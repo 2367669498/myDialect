@@ -1,7 +1,10 @@
 package com.zheng.adminService.entity;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.util.Date;
+
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
@@ -36,6 +39,7 @@ public class DialectNew implements Serializable {
     @ApiModelProperty(value = "区域id")
     private String regionalId;
 
+
     @ApiModelProperty(value = "内容")
     private String detailed;
 
@@ -48,9 +52,11 @@ public class DialectNew implements Serializable {
     @ApiModelProperty(value = "是否删除 0：未删除 1：已删除")
     private Integer isDelete;
 
+    @TableField(fill = FieldFill.INSERT)
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
 
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     @ApiModelProperty(value = "更新时间")
     private Date updateTime;
 

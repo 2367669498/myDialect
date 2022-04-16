@@ -9,19 +9,19 @@ public class MemberVo {
     @ApiModelProperty(value = "id")
     private String id;
 
-    @ApiModelProperty(value = "ÕËºÅ")
+    @ApiModelProperty(value = "è´¦å·")
     private String input;
 
-    @ApiModelProperty(value = "Ãû³Æ")
+    @ApiModelProperty(value = "åç§°")
     private String username;
 
-    @ApiModelProperty(value = "ÊÖ»úºÅ")
+    @ApiModelProperty(value = "æ‰‹æœºå·")
     private String phone;
     
-    @ApiModelProperty(value = "ÃÜÂë")
+    @ApiModelProperty(value = "å¯†ç ")
     private String password;
 
-    @ApiModelProperty(value = "Í·Ïñ")
+    @ApiModelProperty(value = "å¤´åƒ")
     private String avater;
 
 

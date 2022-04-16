@@ -84,7 +84,7 @@ public class DialectVideoController {
 
     @ApiOperation(value = "更新")
     @PostMapping("updateById")
-    public ResponseUtils updateById(DialectVideoVo dialectVideoVo){
+    public ResponseUtils updateById(DialectVideo dialectVideoVo){
         DialectVideo dialectVideo = new DialectVideo();
         BeanUtils.copyProperties(dialectVideoVo,dialectVideo);
         dialectVideoService.updateById(dialectVideo);

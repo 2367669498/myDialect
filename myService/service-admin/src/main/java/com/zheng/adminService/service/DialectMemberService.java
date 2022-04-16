@@ -5,6 +5,8 @@ import com.zheng.adminService.entity.DialectMember;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zheng.adminService.entity.vo.MemberVo;
 
+import java.util.List;
+
 /**
  * <p>
  *  服务类
@@ -20,4 +22,6 @@ public interface DialectMemberService extends IService<DialectMember> {
     ResponseUtils register(MemberVo memberVo);
 
     DialectMember getOpenIdMember(String openid);
+
+    ResponseUtils deleteById(List<String> idList);
 }

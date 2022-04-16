@@ -10,39 +10,39 @@ public class DialectRegionalVo {
     @ApiModelProperty(value = "id")
     private String id;
 
-    @ApiModelProperty(value = "ÏçÒôµÄÃû³Æ")
+    @ApiModelProperty(value = "ä¹¡éŸ³çš„åç§°")
     private String regionalName;
 
-    @ApiModelProperty(value = "ÏçÒô²É¼¯ÑùÊ½ 1£ºµ¥×Ö  2£º´Ê»ã  3£ºÀı¾ä  4£ºÃñÒ¥")
+    @ApiModelProperty(value = "ä¹¡éŸ³é‡‡é›†æ ·å¼ 1ï¼šå•å­—  2ï¼šè¯æ±‡  3ï¼šä¾‹å¥  4ï¼šæ°‘è°£")
     private Integer regionalType;
 
-    @ApiModelProperty(value = "ÊÇ·ñ´æÔÚÊÓÆµ 0£º²»´æÔÚ 1£º´æÔÚ")
+    @ApiModelProperty(value = "æ˜¯å¦å­˜åœ¨è§†é¢‘ 0ï¼šä¸å­˜åœ¨ 1ï¼šå­˜åœ¨")
     private Integer isVideo;
 
-    @ApiModelProperty(value = "ÏçÒôÊÓÆµ±£´æÎÄ¼şid")
+    @ApiModelProperty(value = "ä¹¡éŸ³è§†é¢‘ä¿å­˜æ–‡ä»¶id")
     private String videoId;
 
-    @ApiModelProperty(value = "ÊÇ·ñ´æÔÚÒôÆµ 0£º²»´æÔÚ 1£º´æÔÚ")
+    @ApiModelProperty(value = "æ˜¯å¦å­˜åœ¨éŸ³é¢‘ 0ï¼šä¸å­˜åœ¨ 1ï¼šå­˜åœ¨")
     private Integer isMusic;
 
-    @ApiModelProperty(value = "ÏçÒôÒôÆµ±£´æÎÄ¼şid")
+    @ApiModelProperty(value = "ä¹¡éŸ³éŸ³é¢‘ä¿å­˜æ–‡ä»¶id")
     private String musicId;
 
-    @ApiModelProperty(value = "¹éÊôµØid")
+    @ApiModelProperty(value = "å½’å±åœ°id")
     private String addressId;
 
-    @ApiModelProperty(value = "¹éÊôµØ")
+    @ApiModelProperty(value = "å½’å±åœ°")
     private String addressName;
 
-    @ApiModelProperty(value = "ÏçÒô¹éÊôµØËµÃ÷")
+    @ApiModelProperty(value = "ä¹¡éŸ³å½’å±åœ°è¯´æ˜")
     private String addressDetailed;
 
-    @ApiModelProperty(value = "ÏêÏ¸ËµÃ÷")
+    @ApiModelProperty(value = "è¯¦ç»†è¯´æ˜")
     private String detailed;
 
-    @ApiModelProperty(value = "ÉÏ´«Õßid")
+    @ApiModelProperty(value = "ä¸Šä¼ è€…id")
     private String uploadUserId;
 
-    @ApiModelProperty(value = "×´Ì¬£º1£ºÉóºËÖĞ 2£ºÒÔÍ¨¹ı 3£º½ûÓÃ")
+    @ApiModelProperty(value = "çŠ¶æ€ï¼š1ï¼šå®¡æ ¸ä¸­ 2ï¼šä»¥é€šè¿‡ 3ï¼šç¦ç”¨")
     private Integer status;
 }
